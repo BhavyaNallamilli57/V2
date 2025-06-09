@@ -65,24 +65,24 @@ async def is_user_verified(user_id):
  
 @app.on_message(filters.command("start"))
 async def token_handler(client, message):
-    """Handle the /token command."""
+    """Handle the /start command."""
     join = await subscribe(client, message)
     if join == 1:
         return
-    chat_id = "save_restricted_content_bots"
-    msg = await app.get_messages(chat_id, 796)
+
     user_id = message.chat.id
+
     if len(message.command) <= 1:
         image_url = "https://i.ibb.co/Jwmdq1mX/ca0c326e2e27.jpg"
         join_button = InlineKeyboardButton("Join Channel", url="https://t.me/PSPKBOTS")
-        premium = InlineKeyboardButton("Get Premium", url="https://t.me/PSPKADMINBOT")   
+        premium = InlineKeyboardButton("Get Premium", url="https://t.me/PSPKADMINBOT")
         keyboard = InlineKeyboardMarkup([
-            [join_button],   
-            [premium]    
+            [join_button],
+            [premium]
         ])
-         
+
         await message.reply_photo(
-            msg.photo.file_id,
+            photo=image_url,
             caption=(
                 "Hi 👋 Welcome, Wanna intro...?\n\n"
                 "✳️ I can save posts from private and public channels, groups where forwarding is off. I can download videos/audio from YT, INSTA, ... social platforms\n"
@@ -90,30 +90,27 @@ async def token_handler(client, message):
             ),
             reply_markup=keyboard
         )
-        return  
- 
-    param = message.command[1] if len(message.command) > 1 else None
+        return
+
+    # Token verification logic for users who have a /start param
+    param = message.command[1]
     freecheck = await chk_user(message, user_id)
     if freecheck != 1:
         await message.reply("You are a premium user no need of token 😉")
         return
- 
-     
-    if param:
-        if user_id in Param and Param[user_id] == param:
-             
-            await token.insert_one({
-                "user_id": user_id,
-                "param": param,
-                "created_at": datetime.utcnow(),
-                "expires_at": datetime.utcnow() + timedelta(hours=3),
-            })
-            del Param[user_id]   
-            await message.reply("✅ You have been verified successfully! Enjoy your session for next 3 hours.")
-            return
-        else:
-            await message.reply("❌ Invalid or expired verification link. Please generate a new token.")
-            return
+
+    if user_id in Param and Param[user_id] == param:
+        await token.insert_one({
+            "user_id": user_id,
+            "param": param,
+            "created_at": datetime.utcnow(),
+            "expires_at": datetime.utcnow() + timedelta(hours=3),
+        })
+        del Param[user_id]
+        await message.reply("✅ You have been verified successfully! Enjoy your session for next 3 hours.")
+    else:
+        await message.reply("❌ Invalid or expired verification link. Please generate a new token.")
+
  
 @app.on_message(filters.command("token"))
 async def smart_handler(client, message):
