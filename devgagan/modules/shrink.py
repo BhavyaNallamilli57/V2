@@ -73,7 +73,7 @@ async def token_handler(client, message):
     msg = await app.get_messages(chat_id, 796)
     user_id = message.chat.id
     if len(message.command) <= 1:
-        image_url = "https://telegra.ph/file/2152166a32ddf6849288d-653e6741a3bc4e0f63.jpg"
+        image_url = "https://i.ibb.co/Jwmdq1mX/ca0c326e2e27.jpg"
         join_button = InlineKeyboardButton("Join Channel", url="https://t.me/PSPKBOTS")
         premium = InlineKeyboardButton("Get Premium", url="https://t.me/PSPKADMINBOT")   
         keyboard = InlineKeyboardMarkup([
