@@ -227,11 +227,11 @@ async def batch_link(_, message):
         await message.reply(response_message)
         return
         
-    join_button = InlineKeyboardButton("Join Channel", url="https://t.me/pspkbots")
+    join_button = InlineKeyboardButton("Join Channel", url="https://t.me/PSPKBOTS")
     keyboard = InlineKeyboardMarkup([[join_button]])
     pin_msg = await app.send_message(
         user_id,
-        f"Batch process started ⚡\nProcessing: 0/{cl}\n\n**Powered by PSPKBOTS**",
+        f"Batch process started ⚡\nProcessing: 0/{cl}\n\n**Powered by PSPK BOTS**",
         reply_markup=keyboard
     )
     await pin_msg.pin(both_sides=True)
@@ -250,14 +250,14 @@ async def batch_link(_, message):
                     msg = await app.send_message(message.chat.id, f"Processing...")
                     await process_and_upload_link(userbot, user_id, msg.id, link, 0, message)
                     await pin_msg.edit_text(
-                        f"Batch process started ⚡\nProcessing: {i - cs + 1}/{cl}\n\n**__Powered by PSPK BOTS__**",
+                        f"Batch process started ⚡\nProcessing: {i - cs + 1}/{cl}\n\n**__Powered by PSPKBOTS__**",
                         reply_markup=keyboard
                     )
                     normal_links_handled = True
         if normal_links_handled:
             await set_interval(user_id, interval_minutes=300)
             await pin_msg.edit_text(
-                f"Batch completed successfully for {cl} messages 🎉\n\n**__Powered by PSPK BOTS__**",
+                f"Batch completed successfully for {cl} messages 🎉\n\n**__Powered by PSPKBOTS__**",
                 reply_markup=keyboard
             )
             await app.send_message(message.chat.id, "Batch completed successfully! 🎉")
@@ -276,13 +276,13 @@ async def batch_link(_, message):
                     msg = await app.send_message(message.chat.id, f"Processing...")
                     await process_and_upload_link(userbot, user_id, msg.id, link, 0, message)
                     await pin_msg.edit_text(
-                        f"Batch process started ⚡\nProcessing: {i - cs + 1}/{cl}\n\n**__Powered by PSPK BOTS__**",
+                        f"Batch process started ⚡\nProcessing: {i - cs + 1}/{cl}\n\n**__Powered by PSPKBOTS__**",
                         reply_markup=keyboard
                     )
 
         await set_interval(user_id, interval_minutes=300)
         await pin_msg.edit_text(
-            f"Batch completed successfully for {cl} messages 🎉\n\n**__Powered by PSPK BOTS__**",
+            f"Batch completed successfully for {cl} messages 🎉\n\n**__Powered by PSPKBOTS__**",
             reply_markup=keyboard
         )
         await app.send_message(message.chat.id, "Batch completed successfully! 🎉")
@@ -291,7 +291,6 @@ async def batch_link(_, message):
         await app.send_message(message.chat.id, f"Error: {e}")
     finally:
         users_loop.pop(user_id, None)
-
 
 @app.on_message(filters.command("cancel"))
 async def stop_batch(_, message):
